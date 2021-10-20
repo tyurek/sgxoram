@@ -1,0 +1,13 @@
+[package]
+name = "mc-sgx-panic"
+version = "1.2.0-pre0"
+authors = ["MobileCoin"]
+
+[features]
+default = ["alloc", "panic_abort"]
+alloc = []
+# Note: If alternate modes besides `panic_abort` are implemented they should go here,
+# similar as std lib
+panic_abort = []
+
+[dependencies]

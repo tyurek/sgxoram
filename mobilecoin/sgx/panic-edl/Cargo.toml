@@ -1,0 +1,9 @@
+[package]
+name = "mc-sgx-panic-edl"
+version = "1.2.0-pre0"
+authors = ["MobileCoin"]
+edition = "2018"
+links = "sgx_panic_edl"
+
+[build-dependencies]
+cargo-emit = "0.2"

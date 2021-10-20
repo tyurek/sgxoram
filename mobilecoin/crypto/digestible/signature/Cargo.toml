@@ -1,0 +1,13 @@
+[package]
+name = "mc-crypto-digestible-signature"
+version = "1.2.0-pre0"
+authors = ["MobileCoin"]
+edition = "2018"
+description = "Digestible Signatures"
+readme = "README.md"
+
+[dependencies]
+mc-crypto-digestible = { path = ".." }
+
+signature = { version = "1.3.1", default-features = false }
+schnorrkel-og = { version = "0.10.1", default-features = false }

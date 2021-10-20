@@ -1,0 +1,72 @@
+[package]
+name = "mc-attest-core"
+version = "1.2.0-pre0"
+authors = ["MobileCoin"]
+edition = "2018"
+description = '''
+This crate contains necessary functions and utilities to perform remote
+attestation and verification of an SGX enclave.
+
+At present this is limited to the data structures and and errors necessary to
+verify the contents of the report as returned by Intel.
+'''
+
+[features]
+default = ["std"]
+std = [
+    "mc-common/std",
+    "digest/std",
+    "displaydoc/std",
+    "mbedtls/std",
+    "sha2/std",
+]
+
+# This means "use the fake SGX stuff where required"
+sgx-sim = []
+# This means "use the dev endpoint of Intel's Attestation Service"
+ias-dev = []
+
+[dependencies]
+mc-common = { path = "../../common", default-features = false }
+mc-crypto-digestible = { path = "../../crypto/digestible" }
+mc-crypto-rand = { path = "../../crypto/rand" }
+mc-util-encodings = { path = "../../util/encodings" }
+mc-sgx-css = { path = "../../sgx/css" }
+mc-sgx-types = { path = "../../sgx/types" }
+
+mbedtls = { version = "0.8.1", default-features = false, features = ["no_std_deps"] }
+
+binascii = "0.1.2"
+bitflags = "1.2"
+cfg-if = "1.0"
+chrono = { version = "0.4.19", default-features = false, features = ["alloc"] }
+digest = { version = "0.9", default-features = false }
+displaydoc = { version = "0.2", default-features = false }
+hex_fmt = "0.3"
+rjson = "0.3.1"
+serde = { version = "1.0", default-features = false, features = ["alloc", "derive"] }
+sha2 = { version = "0.9.8", default-features = false }
+subtle = { version = "2.4.1", default-features = false, features = ["i128"] }
+prost = { version = "0.9", default-features = false }
+
+[dev-dependencies]
+mc-util-serial = { path = "../../util/serial" }
+bincode = "1.3"
+hex = "0.4"
+pem = "1.0"
+rand = "0.8"
+rand_hc = "0.3"
+
+[build-dependencies]
+mc-sgx-build =  { path = "../../sgx/build" }
+
+cargo-emit = "0.2"
+chrono = "0.4"
+hex = "0.4"
+lazy_static = "1.4"
+rand = "0.8"
+rand_hc = "0.3"
+
+# We use mbedtls to generate certificates for simulation mode
+mbedtls = "0.8.1"
+mbedtls-sys-auto = "2.26.1"

@@ -1,0 +1,23 @@
+[package]
+name = "mc-crypto-ake-enclave"
+version = "1.2.0-pre0"
+authors = ["MobileCoin"]
+edition = "2018"
+
+[dependencies]
+mc-attest-core = { path = "../../../attest/core", default-features = false }
+mc-attest-ake = { path = "../../../attest/ake", default-features = false }
+mc-attest-enclave-api = { path = "../../../attest/enclave-api", default-features = false }
+mc-attest-trusted = { path = "../../../attest/trusted", default-features = false }
+mc-common = { path = "../../../common", default-features = false }
+mc-crypto-keys = { path = "../../../crypto/keys", default-features = false }
+mc-crypto-rand = { path = "../../../crypto/rand", default-features = false }
+mc-util-from-random = { path = "../../../util/from-random" }
+mc-sgx-compat = { path = "../../../sgx/compat", default-features = false }
+
+aes-gcm = "0.9.4"
+digest = { version = "0.9", default-features = false }
+sha2 = { version = "0.9.8", default-features = false }
+
+[build-dependencies]
+mc-sgx-build = { path = "../../../sgx/build" }

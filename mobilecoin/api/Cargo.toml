@@ -1,0 +1,48 @@
+[package]
+name = "mc-api"
+version = "1.2.0-pre0"
+authors = ["MobileCoin"]
+build = "build.rs"
+edition = "2018"
+links = "mc-api"
+
+[dependencies]
+mc-account-keys = { path = "../account-keys" }
+mc-attest-core = { path = "../attest/core" }
+mc-crypto-keys = { path = "../crypto/keys" }
+mc-util-repr-bytes = { path = "../util/repr-bytes" }
+mc-util-serial = { path = "../util/serial" }
+mc-transaction-core = { path = "../transaction/core" }
+mc-watcher-api = { path = "../watcher/api" }
+
+bs58 = "0.4.0"
+crc = "2.0.0"
+displaydoc = { version = "0.2", default-features = false }
+protobuf = "2.22.1"
+
+[target.'cfg(any(target_feature = "avx2", target_feature = "avx"))'.dependencies]
+curve25519-dalek = { version = "4.0.0-pre.1", default-features = false, features = ["simd_backend", "nightly"] }
+
+[target.'cfg(not(any(target_feature = "avx2", target_feature = "avx")))'.dependencies]
+curve25519-dalek = { version = "4.0.0-pre.1", default-features = false, features = ["nightly", "u64_backend"] }
+
+[build-dependencies]
+mc-util-build-grpc = { path = "../util/build/grpc" }
+mc-util-build-script = { path = "../util/build/script" }
+
+cargo-emit = "0.2.1"
+
+[dev-dependencies]
+mc-crypto-x509-test-vectors = { path = "../crypto/x509/test-vectors" }
+mc-test-vectors-b58-encodings = { path = "../test-vectors/b58-encodings" }
+mc-transaction-core-test-utils = { path = "../transaction/core/test-utils" }
+mc-transaction-std = { path = "../transaction/std" }
+mc-util-from-random = { path = "../util/from-random" }
+mc-util-test-helper = { path = "../util/test-helper" }
+mc-util-test-vector = { path = "../util/test-vector" }
+
+datatest = "0.6.4"
+generic-array = "0.14"
+pem = "1.0"
+prost = { version = "0.9", default-features = false }
+rand = "0.8"

@@ -1,0 +1,9 @@
+[package]
+name = "mc-fog-report-validation-test-utils"
+version = "1.2.0-pre0"
+authors = ["MobileCoin"]
+edition = "2018"
+
+[dependencies]
+mc-account-keys = { path = "../../../../account-keys" }
+mc-fog-report-validation = { path = ".." }

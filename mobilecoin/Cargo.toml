@@ -1,0 +1,213 @@
+cargo-features = ["named-profiles"]
+
+[workspace]
+resolver = "2"
+members = [
+    "account-keys",
+    "account-keys/slip10",
+    "admin-http-gateway",
+    "android-bindings",
+    "api",
+    "attest/ake",
+    "attest/api",
+    "attest/core",
+    "attest/net",
+    "attest/trusted",
+    "attest/untrusted",
+    "common",
+    "connection",
+    "connection/test-utils",
+    "consensus/api",
+    "consensus/enclave",
+    "consensus/enclave/api",
+    "consensus/enclave/edl",
+    "consensus/enclave/impl",
+    "consensus/enclave/measurement",
+    "consensus/enclave/mock",
+    "consensus/scp",
+    "consensus/scp/play",
+    "consensus/service",
+    "crypto/box",
+    "crypto/digestible",
+    "crypto/digestible/derive/test",
+    "crypto/digestible/test-utils",
+    "crypto/digestible/signature",
+    "crypto/keys",
+    "crypto/message-cipher",
+    "crypto/noise",
+    "crypto/rand",
+    "crypto/x509/test-vectors",
+    "crypto/x509/utils",
+    "enclave-boundary",
+    "fog/api",
+    "fog/distribution",
+    "fog/enclave_connection",
+    "fog/ingest/client",
+    "fog/ingest/enclave",
+    "fog/ingest/enclave/api",
+    "fog/ingest/enclave/edl",
+    "fog/ingest/enclave/impl",
+    "fog/ingest/enclave/measurement",
+    "fog/ingest/server",
+    "fog/kex_rng",
+    "fog/ledger/connection",
+    "fog/ledger/enclave",
+    "fog/ledger/enclave/api",
+    "fog/ledger/enclave/edl",
+    "fog/ledger/enclave/impl",
+    "fog/ledger/enclave/measurement",
+    "fog/ledger/server",
+    "fog/load_testing",
+    "fog/ocall_oram_storage/edl",
+    "fog/ocall_oram_storage/testing",
+    "fog/ocall_oram_storage/trusted",
+    "fog/ocall_oram_storage/untrusted",
+    "fog/recovery_db_iface",
+    "fog/report/api",
+    "fog/report/cli",
+    "fog/report/connection",
+    "fog/report/server",
+    "fog/report/types",
+    "fog/report/validation",
+    "fog/report/validation/test-utils",
+    "fog/sample-paykit",
+    "fog/sig",
+    "fog/sig/authority",
+    "fog/sig/report",
+    "fog/sql_recovery_db",
+    "fog/test-client",
+    "fog/test_infra",
+    "fog/types",
+    "fog/uri",
+    "fog/view/connection",
+    "fog/view/enclave",
+    "fog/view/enclave/api",
+    "fog/view/enclave/edl",
+    "fog/view/enclave/impl",
+    "fog/view/enclave/measurement",
+    "fog/view/load-test",
+    "fog/view/protocol",
+    "fog/view/server",
+    "ledger/db",
+    "ledger/distribution",
+    "ledger/from-archive",
+    "ledger/migration",
+    "ledger/sync",
+    "libmobilecoin",
+    "mobilecoind",
+    "mobilecoind-json",
+    "mobilecoind/api",
+    "peers",
+    "peers/test-utils",
+    "sgx/compat-edl",
+    "sgx/css",
+    "sgx/css-dump",
+    "sgx/debug-edl",
+    "sgx/panic-edl",
+    "sgx/report-cache/api",
+    "sgx/report-cache/untrusted",
+    "sgx/slog-edl",
+    "slam",
+    "test-vectors/account-keys",
+    "test-vectors/b58-encodings",
+    "transaction/core",
+    "transaction/core/test-utils",
+    "transaction/std",
+    "util/b58-decoder",
+    "util/build/enclave",
+    "util/build/grpc",
+    "util/build/script",
+    "util/build/sgx",
+    "util/encodings",
+    "util/ffi",
+    "util/from-random",
+    "util/generate-sample-ledger",
+    "util/grpc",
+    "util/grpc-admin-tool",
+    "util/grpc-token-generator",
+    "util/host-cert",
+    "util/keyfile",
+    "util/lmdb",
+    "util/logger-macros",
+    "util/metered-channel",
+    "util/metrics",
+    "util/repr-bytes",
+    "util/serial",
+    "util/test-helper",
+    "util/test-vector",
+    "util/uri",
+    "watcher",
+    "watcher/api",
+]
+exclude = [
+    # mc-util-serial should only be accessed via the `common` crate.
+    "util/serial",
+    # N.B. for some reason, putting these crates under `exclude` helps with
+    # making `cargo test --all` work, when `consensus-enclave-impl` is part of workspace
+    "sgx",
+    "fog/ingest/enclave/trusted",
+    "fog/ledger/enclave/trusted",
+    "fog/view/enclave/trusted",
+]
+
+[profile.dev]
+opt-level = 0
+rpath = true
+
+[profile.release]
+opt-level = 3
+rpath = false
+lto = false
+debug-assertions = false
+overflow-checks = false
+
+[profile.mobile]
+inherits = "release"
+debug = false
+lto = true
+
+[profile.mobile-release]
+inherits = "mobile"
+codegen-units = 1
+
+# Skip the need for LD_LIBRARY_PATH in `cargo test`
+[profile.test]
+rpath = true
+
+[patch.crates-io]
+# Fork and rename to use "OG" dalek-cryptography.
+bulletproofs-og = { git = "https://github.com/mobilecoinfoundation/bulletproofs.git", rev = "675330c754f28876dbf94fc303fe73666cf8f8f4" }
+
+# This version contains iOS build fixes
+cmake = { git = "https://github.com/alexcrichton/cmake-rs", rev = "5f89f90ee5d7789832963bffdb2dcb5939e6199c" }
+
+# Fix issues with recent nightlies
+datatest = { git = "https://github.com/mobilecoinfoundation/datatest.git", rev = "dc3521f692228b846a2312e7ceece50e7664be6e" }
+
+# Fix issues with recent nightlies, bump curve25519-dalek version
+ed25519-dalek = { git = "https://github.com/mobilecoinfoundation/ed25519-dalek.git", rev = "78bdc2a0b0af852cb4e47a0ca9be74bdf77c57b6" }
+
+# grpcio patched with metadata
+grpcio = { git = "https://github.com/mobilecoinofficial/grpc-rs", rev = "10ba9f8f4546916c7e7532c4d1c6cdcf5df62553" }
+protoc-grpcio = { git = "https://github.com/mobilecoinofficial/protoc-grpcio", rev = "9e63f09ec408722f731c9cb60bf06c3d46bcabec" }
+
+# mbedtls patched to allow certificate verification with a profile
+mbedtls = { git = "https://github.com/mobilecoinofficial/rust-mbedtls.git", rev = "ce4cf3e4814e92734434c7deaa59d649d43f442d" }
+mbedtls-sys-auto = { git = "https://github.com/mobilecoinofficial/rust-mbedtls.git", rev = "ce4cf3e4814e92734434c7deaa59d649d43f442d" }
+
+# packed_simd_2 has unreleased fixes for build issues we're experiencing
+packed_simd_2 = { git = "https://github.com/rust-lang/packed_simd.git", rev = "f60e900f4ceb71303baa37ff8b41ee7d490c01bf" }
+
+# Override lmdb-rkv for a necessary bugfix (see https://github.com/mozilla/lmdb-rs/pull/80)
+lmdb-rkv = { git = "https://github.com/mozilla/lmdb-rs", rev = "df1c2f5" }
+
+# Fork and rename to use "OG" dalek-cryptography.
+schnorrkel-og = { git = "https://github.com/mobilecoinfoundation/schnorrkel.git", rev = "9b48418556b0af476be2313309bc5a23fb8b351d" }
+
+# Fixes the following:
+# * Allow enabling `serde/std` without also requiring `serde_cbor/std` to be enabled.
+#   See: https://github.com/pyfisch/cbor/pull/198
+serde_cbor = { git = "https://github.com/mobilecoinofficial/cbor", rev = "4c886a7c1d523aae1ec4aa7386f402cb2f4341b5" }
+
+# Fix issues with recent nightlies, bump curve25519-dalek version
+x25519-dalek = { git = "https://github.com/mobilecoinfoundation/x25519-dalek.git", rev = "672f29ef4b3addd9a3c4888cf4b836b243bda595" }

@@ -1,0 +1,10 @@
+[package]
+name = "mc-util-build-grpc"
+version = "1.2.0-pre0"
+authors = ["MobileCoin"]
+edition = "2018"
+
+[dependencies]
+mc-util-build-script = { path = "../../build/script" }
+
+protoc-grpcio = "2.0.0"

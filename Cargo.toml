@@ -1,0 +1,21 @@
+#export rust_toolchain=nightly-2021-09-27
+#bash /root/05_rust.sh
+
+[package]
+name = "oramsgx"
+version = "0.1.0"
+authors = ["root"]
+edition = "2018"
+
+[dependencies]
+mc-oblivious-ram = "2.0.0"
+aligned-cmov = "2.0.0"
+mc-oblivious-traits = "2.0.0"
+rand_core = "0.6.3"
+rand_hc = "0.3.1"
+mc-fog-ocall-oram-storage-trusted = { path = "mobilecoin/fog/ocall_oram_storage/trusted" }
+mc-fog-ocall-oram-storage-untrusted = { path = "mobilecoin/fog/ocall_oram_storage/untrusted" }
+
+[patch.crates-io]
+schnorrkel-og = { git = "https://github.com/mobilecoinfoundation/schnorrkel.git", rev = "9b48418556b0af476be2313309bc5a23fb8b351d" }
+ed25519-dalek = { git = "https://github.com/mobilecoinfoundation/ed25519-dalek.git", rev = "78bdc2a0b0af852cb4e47a0ca9be74bdf77c57b6" }

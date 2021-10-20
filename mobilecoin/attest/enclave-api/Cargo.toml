@@ -1,0 +1,17 @@
+[package]
+name = "mc-attest-enclave-api"
+version = "1.2.0-pre0"
+authors = ["MobileCoin"]
+edition = "2018"
+description = """
+no_std structs used commonly in enclave api's in connection with attestation and key exchange
+"""
+
+[dependencies]
+mc-attest-core = { path = "../../attest/core", default-features = false }
+mc-attest-ake = { path = "../ake", default-features = false }
+mc-crypto-noise = { path = "../../crypto/noise", default-features = false }
+mc-sgx-compat = { path = "../../sgx/compat" }
+
+displaydoc = { version = "0.2", default-features = false }
+serde = { version = "1.0", default-features = false, features = ["alloc", "derive"] }

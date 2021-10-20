@@ -1,0 +1,32 @@
+[package]
+name = "mc-connection"
+version = "1.2.0-pre0"
+authors = ["MobileCoin"]
+edition = "2018"
+
+[dependencies]
+mc-attest-ake = { path = "../attest/ake" }
+mc-attest-api = { path = "../attest/api" }
+mc-attest-core = { path = "../attest/core" }
+mc-common = { path = "../common" }
+mc-consensus-api = { path = "../consensus/api" }
+mc-crypto-keys = { path = "../crypto/keys" }
+mc-crypto-noise = { path = "../crypto/noise" }
+mc-crypto-rand = { path = "../crypto/rand" }
+mc-transaction-core = { path = "../transaction/core" }
+mc-util-grpc = { path = "../util/grpc" }
+mc-util-serial = { path = "../util/serial" }
+mc-util-uri = { path = "../util/uri" }
+
+aes-gcm = "0.9.4"
+cookie = "0.15"
+displaydoc = { version = "0.2", default-features = false }
+grpcio = "0.9.0"
+retry = "1.3"
+secrecy = "0.8"
+sha2 = "0.9.8"
+
+[dev-dependencies]
+rand = "0.8"
+rand_hc = "0.3"
+tempdir = "0.3"

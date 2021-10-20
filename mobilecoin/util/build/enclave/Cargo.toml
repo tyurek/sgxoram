@@ -1,0 +1,20 @@
+[package]
+name = "mc-util-build-enclave"
+version = "1.2.0-pre0"
+authors = ["MobileCoin"]
+edition = "2018"
+description = "Enclave build assistance, from MobileCoin."
+readme = "README.md"
+
+[dependencies]
+mc-util-build-script = { path = "../script" }
+mc-util-build-sgx = { path = "../sgx" }
+mc-sgx-css = { path = "../../../sgx/css" }
+
+cargo-emit = "0.2.1"
+cargo_metadata = "0.14"
+displaydoc = { version = "0.2", default-features = false }
+mbedtls = "0.8.1"
+mbedtls-sys-auto = "2.26.1"
+pkg-config = "0.3"
+rand = "0.8"

@@ -1,0 +1,13 @@
+version: '3.4'
+
+services:
+  oram:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    cap_add:
+      - NET_ADMIN
+    volumes:
+      - ./oramsgx:/usr/src/oram/oramsgx
+      - ./:/usr/src/oram/
+    command: bash

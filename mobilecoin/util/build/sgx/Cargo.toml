@@ -1,0 +1,15 @@
+[package]
+name = "mc-util-build-sgx"
+version = "1.2.0-pre0"
+authors = ["MobileCoin"]
+edition = "2018"
+description = "SGX utilities assistance, from MobileCoin."
+readme = "README.md"
+
+[dependencies]
+mc-util-build-script = { path = "../script" }
+
+cargo-emit = "0.2.1"
+cc = "1.0"
+displaydoc = { version = "0.2", default-features = false }
+pkg-config = "0.3"

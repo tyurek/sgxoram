@@ -1,0 +1,11 @@
+[package]
+name = "mc-sgx-sync"
+version = "1.2.0-pre0"
+authors = ["MobileCoin"]
+
+[dependencies]
+mc-sgx-types = { path = "../types" }
+mc-sgx-panic = { path = "../panic", optional = true }
+
+[features]
+default = ["mc-sgx-panic"]

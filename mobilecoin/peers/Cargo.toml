@@ -1,0 +1,41 @@
+[package]
+name = "mc-peers"
+version = "1.2.0-pre0"
+authors = ["MobileCoin"]
+edition = "2018"
+
+[features]
+test_utils = []
+
+[dependencies]
+mc-attest-api = { path = "../attest/api" }
+mc-attest-core = { path = "../attest/core" }
+mc-attest-enclave-api = { path = "../attest/enclave-api" }
+mc-common = { path = "../common", features = ["log"] }
+mc-connection = { path = "../connection" }
+mc-consensus-api = { path = "../consensus/api" }
+mc-consensus-enclave-api = { path = "../consensus/enclave/api" }
+mc-consensus-scp = { path = "../consensus/scp" }
+mc-crypto-digestible = { path = "../crypto/digestible" }
+mc-crypto-keys = { path = "../crypto/keys" }
+mc-ledger-db = { path = "../ledger/db" }
+mc-transaction-core = { path = "../transaction/core" }
+mc-util-grpc = { path = "../util/grpc" }
+mc-util-serial = { path = "../util/serial" }
+mc-util-uri = { path = "../util/uri" }
+
+crossbeam-channel = "0.5"
+ed25519 = { version = "1.2.0", default-features = false, features = ["serde"] }
+displaydoc = "0.2"
+grpcio = "0.9.0"
+mockall = "0.10.2"
+protobuf = "2.22.1"
+retry = "1.3"
+serde = { version = "1.0", default-features = false, features = ["alloc", "derive"] }
+
+[dev-dependencies]
+mc-connection-test-utils = { path = "../connection/test-utils" }
+mc-peers-test-utils = { path = "./test-utils" }
+
+rand_hc = "0.3"
+rand = "0.8"

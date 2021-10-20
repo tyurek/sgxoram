@@ -1,0 +1,60 @@
+[package]
+name = "mc-consensus-enclave-impl"
+version = "1.2.0-pre0"
+authors = ["MobileCoin"]
+edition = "2018"
+description = '''
+This crate contains the actual implementation of a mobilenode enclave.
+
+The intent is that this implementation can be built for one of several
+in-enclave configurations:
+
+ 1. Simulation mode (sgx-sim)
+ 1. Pre-release mode (debug, no sgx-sim)
+ 1. Production mode (no debug, no sgx-sim)
+
+sgx-sim is now applied to crates in build.rs as needed, by reading SGX_MODE env
+
+'''
+
+[features]
+default = ["std"]
+std = [
+    "mc-consensus-enclave-api/std",
+    "mbedtls/std",
+]
+
+[dependencies]
+mc-account-keys = { path = "../../../account-keys" }
+mc-attest-core = { path = "../../../attest/core", default-features = false }
+mc-attest-enclave-api = { path = "../../../attest/enclave-api", default-features = false }
+mc-attest-trusted = { path = "../../../attest/trusted", default-features = false }
+mc-common = { path = "../../../common", default-features = false }
+mc-consensus-enclave-api = { path = "../api", default-features = false }
+mc-crypto-ake-enclave = { path = "../../../crypto/ake/enclave" }
+mc-crypto-digestible = { path = "../../../crypto/digestible" }
+mc-crypto-keys = { path = "../../../crypto/keys", default-features = false }
+mc-crypto-rand = { path = "../../../crypto/rand" }
+mc-crypto-message-cipher = { path = "../../../crypto/message-cipher" }
+mc-sgx-compat = { path = "../../../sgx/compat" }
+mc-sgx-report-cache-api = { path = "../../../sgx/report-cache/api" }
+mc-transaction-core = { path = "../../../transaction/core" }
+mc-util-from-random = { path = "../../../util/from-random" }
+mc-util-serial = { path = "../../../util/serial" }
+
+mbedtls = { version = "0.8.1", default-features = false, features = ["no_std_deps"] }
+prost = { version = "0.9", default-features = false, features = ["prost-derive"] }
+rand_core = { version = "0.6", default-features = false }
+
+[dev-dependencies]
+rand = "0.8"
+rand_hc = "0.3"
+mc-common = { path = "../../../common", features = ["loggers"] }
+mc-ledger-db = { path = "../../../ledger/db" }
+mc-transaction-core-test-utils = { path = "../../../transaction/core/test-utils" }
+
+[build-dependencies]
+mc-util-build-script = { path = "../../../util/build/script" }
+
+cargo-emit = "0.2"
+hex = "0.4"

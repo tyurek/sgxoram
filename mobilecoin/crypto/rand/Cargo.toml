@@ -1,0 +1,28 @@
+[package]
+name = "mc-crypto-rand"
+version = "1.2.0-pre0"
+authors = ["MobileCoin"]
+edition = "2018"
+description = '''
+This crate provides a no-std compatible rng called `RdRandRng`.
+
+On targets with +rdrand target feature, it uses the intel RDRAND instruction
+to get randomness directly from the CPU, bypassing a dependency on the OS, libc,
+etc. For servers using SGX, this rng works in trusted and untrusted code equally
+well without changes, which is convenient.
+
+For targets without rdrand, we provide a fallback implementation similar to the
+standard rust `rand` crate's `thread_rng`, using the `getrandom` crate OsRng to
+seed a thread-local rng. `RdRandRng` is in all configurations a zero-width type.
+'''
+
+[features]
+default = []
+std = ["rand_core/std", "rand/std", "rand/std_rng"]
+
+[dependencies]
+cfg-if = "1.0"
+getrandom = "0.2"
+rand = { version = "0.8", default-features = false, features = ["std"] }
+rand_core = { version = "0.6", default-features = false }
+rand_hc = "0.3"
