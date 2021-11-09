@@ -1,14 +1,12 @@
 // Copyright (c) 2018-2021 MobileCoin Inc.
 
-//! Generate the binding code that lives inside the enclave and link it in.
+//! Build script for fog ledger enclave
 
 use cargo_emit::rustc_cfg;
 use mc_util_build_script::Environment;
-use mc_util_build_sgx::{Edger8r, SgxEnvironment, SgxMode};
+use mc_util_build_sgx::{Edger8r, SgxEnvironment, SgxLibraryCollection, SgxMode};
 use pkg_config::{Config, Error as PkgConfigError, Library};
 
-// This should (for now) match the untrusted bridge code. Eventually if Intel
-// cleans up their build, this can use, e.g. libsgx_trts.
 const SGX_LIBS: &[&str] = &["libsgx_urts", "libsgx_epid"];
 const SGX_SIMULATION_LIBS: &[&str] = &["libsgx_urts_sim", "libsgx_epid_sim"];
 
@@ -24,7 +22,6 @@ fn main() {
     cfg.exactly_version(SGX_VERSION)
         .cargo_metadata(false)
         .env_metadata(true);
-
     let libnames = if sgx.sgx_mode() == SgxMode::Simulation {
         rustc_cfg!("feature=\"sgx-sim\"");
         SGX_SIMULATION_LIBS
@@ -63,9 +60,11 @@ fn main() {
 
     edger8r
         .edl(enclave_edl.as_ref())
-        .trusted()
+        .untrusted()
         .generate()
-        .unwrap()
-        //.expect(&format!("Could not generate code {}", enclave_edl))
+        .expect("Could not generate code")
         .build();
+
+    // FIXME: Remove this once we're totally off baidu
+    libraries.emit_cargo();
 }

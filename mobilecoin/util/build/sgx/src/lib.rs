@@ -3,6 +3,7 @@
 #![doc = include_str!("../README.md")]
 #![deny(missing_docs)]
 #![forbid(unsafe_code)]
+#![feature(command_access)]
 
 mod config;
 mod edger8r;

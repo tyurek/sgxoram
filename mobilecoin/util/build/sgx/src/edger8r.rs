@@ -14,6 +14,7 @@ use std::{
     process::Command,
     string::{FromUtf8Error, String},
 };
+use std::ffi::OsString;
 
 /// Errors which can occur when working with edger8r.
 #[derive(Debug, Display)]
@@ -183,14 +184,20 @@ impl Edger8r {
                 .arg(&"--untrusted-dir");
         }
         command.arg(&self.out_dir.to_str().expect("Invalid UTF-8 in out dir"));
+        let myargs = command.get_args().collect::<OsString>();
 
-        let output = command.output()?;
+        //let output = command.output()?;
+        let output = command.output();
+        let output = match output {
+            Ok(file) => file,
+            Err(error) => panic!("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA{:?}AAAAA {:?}", myargs, error),
+        };
 
         if output.status.success() {
             Ok(self)
         } else {
             Err(Error::Generate(
-                format!("{:?}", command),
+                format!("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA{:?}AAAAA {:?}", myargs, command),
                 String::from_utf8(output.stdout)?,
                 String::from_utf8(output.stderr)?,
             ))
