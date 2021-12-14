@@ -5,7 +5,7 @@
 #![deny(missing_docs)]
 use aligned_cmov::{
     subtle::{Choice, ConstantTimeEq},
-    typenum::{U1024, U16, U32, U4096, U64},
+    typenum::{U1024, U16, U32, U4096, U64, U2048},
     A8Bytes, A64Bytes, CMov,
 };
 use alloc::boxed::Box;
@@ -29,10 +29,12 @@ use mc_watcher_api::TimestampResultCode;
 /// KeySize and ValueSize reflect the needs of key_image_store
 /// We must choose an oblivious map algorithm that can support that
 type KeySize = U32;
-type ValueSize = U16;
+//type ValueSize = U16;
+type ValueSize = U32;
 /// BlockSize is a tuning parameter for OMap which must become the ValueSize of
 /// the selected ORAM
 type BlockSize = U1024;
+//type BlockSize = U2048;
 /// This selects an oblivious ram algorithm which can support queries of size
 /// BlockSize The ORAMStorageCreator type is a generic parameter to
 /// KeyImageStore

@@ -1,14 +1,13 @@
-use mc_oblivious_ram::{PathORAM4096Z4Creator};
+use mc_oblivious_ram::{PathORAM4096Z4Creator, PathORAM8192Z4Creator};
 use mc_oblivious_traits::ORAMCreator;
 use aligned_cmov::{A64Bytes, ArrayLength};
+use aligned_cmov::{typenum::{U8192, U2048}};
 //use mc_oblivious_traits::{rng_maker, testing, HeapORAMStorageCreator, ORAM};
 use mc_oblivious_traits::{rng_maker, ORAM};
 use mc_fog_ocall_oram_storage_trusted::OcallORAMStorageCreator;
 pub use mc_fog_ocall_oram_storage_untrusted::{
         allocate_oram_storage, checkin_oram_storage, checkout_oram_storage, release_oram_storage,
 };
-//use mc_fog_ledger_enclave_api::KeyImageData;
-use mc_transaction_core::ring_signature::KeyImage;
 use rand_hc::Hc128Rng;
 use rand_core::SeedableRng;
 
@@ -39,7 +38,7 @@ fn main() {
     const STASH_SIZE: usize = 16;
     println!("Hello Worldo!");
     //let mut oram = PathORAM4096Z4Creator::<RngType, HeapORAMStorageCreator>::create(
-    let mut oram = PathORAM4096Z4Creator::<RngType, OcallORAMStorageCreator>::create(
+    let mut oram = PathORAM8192Z4Creator::<RngType, OcallORAMStorageCreator>::create(
         8192,
         STASH_SIZE,
         &mut maker,
@@ -53,6 +52,10 @@ fn main() {
     let enclave_path = env::current_exe()
         .expect("Could not get the path of our executable")
         .with_file_name(ENCLAVE_FILE);
+    let enclave_path2 = env::current_exe()
+        .expect("Could not get the path of our executable")
+        .with_file_name(ENCLAVE_FILE);
+    println!("{}", enclave_path2.into_os_string().to_str().unwrap());
     //let responder_id = ResponderId("123.123.123.0:9004".to_string());
     let enclave = LedgerSgxEnclave::new(
         enclave_path,
@@ -68,12 +71,13 @@ fn main() {
     //must be 32
     let key: Vec<u8> = Vec::from([2,3,5,2,3,5,2,3,5,2,3,5,2,3,5,2,3,5,2,3,5,2,3,5,2,3,5,2,3,5,2,3]);
     //must be 16
-    let value: Vec<u8> = Vec::from([4,6,121,42,4,6,121,42,4,6,121,42,4,6,121,42]);
-    let s1 = String::from_utf8(value.to_vec()).unwrap();
+    //let value: Vec<u8> = Vec::from([4,6,121,42,4,6,121,42,4,6,121,42,4,6,121,42]);
+    let value: Vec<u8> = Vec::from([2; 32]);
+    //let s1 = String::from_utf8(value.to_vec()).unwrap();
     enclave.add_omap_item(key.to_vec(), value.to_vec()).unwrap();
     let retrieved_value = enclave.get_omap_item(key.to_vec()).unwrap();
     assert_eq!(value.to_vec(), retrieved_value.to_vec());
-    let s = String::from_utf8(retrieved_value).unwrap();
+    //let s = String::from_utf8(retrieved_value).unwrap();
 
     
     enclave.add_oram_item(0, Vec::from([2; 1024])).unwrap();

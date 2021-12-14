@@ -8,7 +8,7 @@ authors = ["root"]
 edition = "2018"
 
 [dependencies]
-mc-oblivious-ram = "2.0.0"
+mc-oblivious-ram = { path = "mc-oblivious-ram" }
 aligned-cmov = "2.0.0"
 mc-oblivious-traits = "2.0.0"
 rand_core = "0.6.3"
@@ -33,3 +33,10 @@ mbedtls-sys-auto = { git = "https://github.com/mobilecoinofficial/rust-mbedtls.g
 cmake = { git = "https://github.com/alexcrichton/cmake-rs", rev = "5f89f90ee5d7789832963bffdb2dcb5939e6199c" }
 
 packed_simd_2 = { git = "https://github.com/rust-lang/packed_simd.git", rev = "f60e900f4ceb71303baa37ff8b41ee7d490c01bf" }
+
+[dev-dependencies]
+criterion = "0.3"
+
+[[bench]]
+name = "my_benchmark"
+harness = false
