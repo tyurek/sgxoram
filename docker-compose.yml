@@ -7,7 +7,19 @@ services:
       dockerfile: Dockerfile
     cap_add:
       - NET_ADMIN
+    devices:
+      - /dev/isgx
     volumes:
       - ./oramsgx:/usr/src/oram/oramsgx
       - ./:/usr/src/oram/
+      - aesmd-socket:/var/run/aesmd
+    environment:
+      LD_LIBRARY_PATH: /opt/intel/sgx-aesm-service/aesm
     command: bash
+volumes:
+  aesmd-socket:
+    driver: local
+    driver_opts:
+      type: "tmpfs"
+      device: "tmpfs"
+      o: "rw"
